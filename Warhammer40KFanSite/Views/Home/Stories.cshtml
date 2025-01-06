@@ -1,0 +1,123 @@
+@model List<Story>
+
+@{
+    ViewData["Title"] = "Stories";
+}
+
+<script>
+    <!--Temp fix to prevent resubmission of data on page refresh-->
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>
+
+<!-- Form container start -->
+<div class="container">
+    <div class="row text-center">
+        <h1 class="display-4">User Stories</h1>
+        <p>This page will be used for forum style discussions between users</p>
+    </div>
+    
+    <div class="row">
+        <!-- Button for modal -->
+        <div class="text-center">
+            <button type="button" class="btn btn-primary modalButton" data-bs-toggle="modal" data-bs-target="#createPostModal">
+                Create Post
+            </button>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="row">
+        <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="createPostModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createPostModalLabel">Create Post</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form input -->
+                        <div class="formArea">
+                            <form method="post">
+                                <div class="col">
+                                    <div class="row">
+                                        <label>Title:</label>
+                                        <input type="text" name="StoryTitle" class="storyOther">
+                                    </div>
+
+                                    <div class="row">
+                                        <label>Topic:</label>
+                                        <input type="text" name="StoryTopic" class="storyOther">
+                                    </div>
+
+                                    <div class="row">
+                                        <label>Author:</label>
+                                        <input type="text" name="StoryAuthor" class="storyOther">
+                                    </div>
+                            
+                                    <div class="row">
+                                        <label>Text:</label>
+                                        <textarea name="storyText" class="storyText"></textarea>
+                                    </div>
+                                
+                                    <input type="submit" value="Submit" style="margin-top: 5%;">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- Form container end -->
+
+<!-- Filter -->
+<h3>Filter:</h3>
+<form method="post" action="/Home/Filter">
+    <label name="title" style="margin-bottom: 2vw;">Title -</label>
+    <input name="title" style="margin-bottom: 2vw;"/><br />
+    <label name="date">Date</label><br />
+    <input name="date" /><br />
+    <button type="submit" style="margin-bottom: 3vw;">Submit</button>
+</form>
+
+<div class="storyArea border">
+    @if (Model.Count > 0)
+    {
+        //flag for if story should be given a grey or white background to help visually break up stories
+        bool alt = false;
+        foreach (Story story in Model)
+        {
+            if (!alt)
+            {
+
+                <div class="story clearfix shadow bg-white rounded">
+                    <h1>@story.StoryTitle</h1>
+                <h4>@story.StoryTopic by <i>@story.StoryAuthor.Username</i></h4>
+                    <p>@story.StoryText </p>
+                    <p class="float-end">Posted @story.StoryDate</p>
+                </div>
+                alt = !alt;
+            }
+            else
+            {
+                <div class="story clearfix shadow bg-lightgrey rounded" style="background-color: lightgrey;">
+                    <h1>@story.StoryTitle</h1>
+                    <h4>@story.StoryTopic by <i>@story.StoryAuthor.Username</i></h4>
+                    <p>@story.StoryText </p>
+                    <p class="float-end">Posted @story.StoryDate</p>
+                </div>
+
+                alt = !alt;
+            }
+        }
+    }
+    else
+    {
+    <div class="text-center">
+        <h3>There are no post yet.</h3>
+    </div>
+    }
+</div>

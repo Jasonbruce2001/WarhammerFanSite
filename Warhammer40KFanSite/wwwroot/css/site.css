@@ -1,0 +1,62 @@
+﻿html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.license {
+    padding-bottom: 2%;
+}
+
+.storyOther {
+  width: 50%;
+  margin: auto 3%;
+}
+
+.storyText {
+  width: 90%;
+  height: 200px;
+  margin: auto 3%;
+}
+
+.story {
+  margin: 1%;
+  padding-right: 1%;
+  padding-left: 1%;
+  border: 2px black solid;
+}
+
+@media only screen and (max-width: 600px) {
+  .modalButton {
+    width: 40%;
+    margin-bottom: 10%;
+  }
+}
+
+.QuizInput {
+  margin-bottom: 3%;
+}
+
+@media only screen and (min-width: 1200px) {
+  .modalButton {
+    width: 15%;
+    margin-bottom: 10%;
+  }
+}
