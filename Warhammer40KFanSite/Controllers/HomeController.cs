@@ -54,7 +54,7 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult Stories(Story model)
     {
-        User user1 = new User() { AccountAge = DateOnly.FromDateTime(DateTime.Now), Username = "Test" };
+        AppUser user1 = new AppUser() { AccountAge = DateOnly.FromDateTime(DateTime.Now), UserName = "Test" };
         model.StoryAuthor = user1;
         
         if (_storyRepo.StoreStory(model) > 0)
