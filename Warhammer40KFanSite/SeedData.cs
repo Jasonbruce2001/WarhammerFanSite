@@ -26,7 +26,7 @@ public class SeedData
             Story story2 = new Story() { StoryTitle = "Beginners Airbrush Tutorial", StoryTopic = "Seeded Topic 2", StoryAuthor = wyattQualiana, StoryText = "asdflkajsdfsdf", StoryDate = DateTime.Now};
             
             // Save stories to db context
-            context.Stories.Add(story1);  
+            context.Stories.Add(story1);
             context.Stories.Add(story2);
             context.SaveChanges(); 
         }
