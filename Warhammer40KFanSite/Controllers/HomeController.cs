@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Reflection.Metadata;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Warhammer40KFanSite.Data;
 using Warhammer40KFanSite.Models;
@@ -11,13 +12,13 @@ public class HomeController : Controller
 {
     // private field
     IStoryRepository _storyRepo;
-
-    /*private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    private UserManager<AppUser> _userManager; 
+    private SignInManager<AppUser> _signInManager;
+    public HomeController(UserManager<AppUser> userMngr, SignInManager<AppUser> signInMngr, IStoryRepository r)
     {
-        _logger = logger;
-    }*/
+        _userManager = userMngr; _signInManager = signInMngr;
+        _storyRepo = r;
+    } 
 
     public IActionResult Index()
     {
@@ -27,12 +28,6 @@ public class HomeController : Controller
     public IActionResult History()
     {
         return View();
-    }
-    
-    // constructor
-    public HomeController(IStoryRepository r)
-    {
-        _storyRepo = r;
     }
 
     public IActionResult Stories()
@@ -54,8 +49,9 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult Stories(Story model)
     {
-        AppUser user1 = new AppUser() { AccountAge = DateOnly.FromDateTime(DateTime.Now), UserName = "Test" };
-        model.StoryAuthor = user1;
+        //AppUser user1 = new AppUser() { AccountAge = DateOnly.FromDateTime(DateTime.Now), UserName = "Test" };
+        
+        model.StoryAuthor = _userManager.GetUserAsync(User).Result;
         
         if (_storyRepo.StoreStory(model) > 0)
         {

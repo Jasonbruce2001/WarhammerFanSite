@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> signInManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -7,6 +10,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Warhammer40KFanSite.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css" integrity="sha-long-hash_code"
+          crossorigin="anonymous">
 </head>
 <body>
     <header>
@@ -47,9 +52,34 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="BookClub" asp-action="Index">Book Club</a>
                         </li>
+                        <!-- Register link non dynamic
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="RegisterVM" asp-action="Register">Login/Register</a>
-                        </li>
+                        </li> -->
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <form method="post" asp-action="Logout" asp-controller="RegisterVm">
+                                    <input type="submit" value="Log Out" class="btn btn-outline-dark"/>
+                                    <span class="text-dark">@User.Identity.Name</span>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            // Get current action
+                            var action = ViewContext.RouteData.Values["action"]?.ToString();
+                            // anonymous user - Register link and Log In button
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="RegisterVm" asp-action="Register">
+                                    <span class="fas fa-edit"></span> &nbsp; Register </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-action="LogIn" asp-controller="RegisterVm" class="btn btn-outline-dark">
+                                    Log In
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
