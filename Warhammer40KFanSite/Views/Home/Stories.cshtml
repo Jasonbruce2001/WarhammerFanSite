@@ -51,11 +51,6 @@
                                         <label>Topic:</label>
                                         <input type="text" name="StoryTopic" class="storyOther">
                                     </div>
-
-                                    <div class="row">
-                                        <label>Author:</label>
-                                        <input type="text" name="StoryAuthor" class="storyOther">
-                                    </div>
                             
                                     <div class="row">
                                         <label>Text:</label>
@@ -95,7 +90,7 @@
 
                 <div class="story clearfix shadow bg-white rounded">
                     <h1>@story.StoryTitle</h1>
-                <h4>@story.StoryTopic by <i>@story.StoryAuthor.Username</i></h4>
+                <h4>@story.StoryTopic by <i>@story.StoryAuthor.UserName</i></h4>
                     <p>@story.StoryText </p>
                     <p class="float-end">Posted @story.StoryDate</p>
                 </div>
@@ -105,7 +100,7 @@
             {
                 <div class="story clearfix shadow bg-lightgrey rounded" style="background-color: lightgrey;">
                     <h1>@story.StoryTitle</h1>
-                    <h4>@story.StoryTopic by <i>@story.StoryAuthor.Username</i></h4>
+                    <h4>@story.StoryTopic by <i>@story.StoryAuthor.UserName</i></h4>
                     <p>@story.StoryText </p>
                     <p class="float-end">Posted @story.StoryDate</p>
                 </div>

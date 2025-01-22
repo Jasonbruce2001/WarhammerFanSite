@@ -1,10 +1,11 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Warhammer40KFanSite.Models;
 using Warhammer40KFanSite.QuizModel;
 
 namespace Warhammer40KFanSite;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : IdentityDbContext
 {
     // constructor just calls the base class constructor
     public ApplicationDbContext(
@@ -14,5 +15,4 @@ public class ApplicationDbContext : DbContext
     public DbSet<Quiz> Quizzes { get; set; }
     public DbSet<Question> Questions { get; set; }
     public DbSet<Story> Stories { get; set; }
-    public DbSet<User> Users { get; set; }
 }
