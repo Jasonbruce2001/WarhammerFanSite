@@ -4,7 +4,9 @@
 }
 
 <h1 class="mb-2">Manage Users</h1> 
-<h5 class="mt-2"><a asp-action="Add">Add a User</a></h5>
+<h5 class="mt-2">
+    <a asp-action="Add">Add a User</a>
+</h5>
 
 <table class="table table-bordered table-striped table-sm">
     <thead>
@@ -33,14 +35,21 @@
                         </form>
                     </td>
                     <td>
-                        <form method="post" asp-action="AddToAdmin" asp-route-id="@user.Id">
-                            <button type="submit" class="btn btn-primary"> Add To Admin</button>
-                        </form>
+                        @if (!user.RoleNames.Contains("Admin"))
+                        {
+                            <form method="post" asp-action="AddToAdmin" asp-route-id="@user.Id">
+                                <button type="submit" class="btn btn-primary"> Add To Admin</button>
+                            </form>
+                        }
                     </td>
                     <td>
-                        <form method="post" asp-action="RemoveFromAdmin" asp-route-id="@user.Id">
-                            <button type="submit" class="btn btn-primary"> Remove From Admin</button>
-                        </form> </td>
+                        @if (user.RoleNames.Contains("Admin"))
+                        {
+                            <form method="post" asp-action="RemoveFromAdmin" asp-route-id="@user.Id">
+                                <button type="submit" class="btn btn-primary"> Remove From Admin</button>
+                            </form>
+                        }
+                    </td>
                 </tr>
             }
         }

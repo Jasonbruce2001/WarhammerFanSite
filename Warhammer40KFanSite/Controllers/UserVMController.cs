@@ -14,13 +14,15 @@ public class UserVmController : Controller
     
     public UserVmController(UserManager<AppUser> userMngr, RoleManager<IdentityRole> roleMngr)
     {
-        _userManager = userMngr; _roleManager = roleMngr;
+        _userManager = userMngr; 
+        _roleManager = roleMngr;
     }
     
     public async Task<IActionResult> Index() {
         List<AppUser> users = new List<AppUser>(); 
-        foreach (AppUser user in _userManager.Users) {
-            user.RoleNames = await _userManager.GetRolesAsync(user); users.Add(user);
+        foreach (AppUser user in _userManager.Users.ToList()) {
+            user.RoleNames = await _userManager.GetRolesAsync(user); 
+            users.Add(user);
         }
         
         UserVM model = new UserVM() 
@@ -28,8 +30,8 @@ public class UserVmController : Controller
             Users = users, Roles = _roleManager.Roles 
         }; 
         
-        return View("Index", model); 
-    } 
+        return View(model); 
+    }
 
     [HttpGet]
     public IActionResult Add()
@@ -123,5 +125,10 @@ public class UserVmController : Controller
         await _roleManager.CreateAsync(new IdentityRole("Admin"));
         
         return RedirectToAction("Index");
+    }
+
+    public ViewResult AccessDenied()
+    {
+        return View();
     }
 }

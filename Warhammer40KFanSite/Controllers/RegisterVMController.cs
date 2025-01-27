@@ -56,7 +56,6 @@ public class RegisterVmController : Controller
     [HttpPost]
     public async Task<IActionResult> LogIn(LogInVM model)
     {
-        model.ReturnUrl = "";
         if (ModelState.IsValid)
         {
             var result = await signInManager.PasswordSignInAsync
