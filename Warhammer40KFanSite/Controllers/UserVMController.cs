@@ -36,7 +36,7 @@ public class UserVmController : Controller
     [HttpGet]
     public IActionResult Add()
     {
-        return View("../RegisterVm/Register");
+        return View();
     }
 
     [HttpPost]
@@ -44,7 +44,8 @@ public class UserVmController : Controller
     {
         if (ModelState.IsValid)
         {
-            var user = new AppUser { UserName = model.Username };
+            DateOnly date = DateOnly.FromDateTime(DateTime.Now);
+            var user = new AppUser { UserName = model.Username, AccountAge = date };
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)

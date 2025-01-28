@@ -26,7 +26,8 @@ public class RegisterVmController : Controller
     {
         if (ModelState.IsValid)
         {
-            var user = new AppUser() { UserName = model.Username };
+            DateOnly date = DateOnly.FromDateTime(DateTime.Now);
+            var user = new AppUser() { UserName = model.Username, AccountAge = date};
             var result = await userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)

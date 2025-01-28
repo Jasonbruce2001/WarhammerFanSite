@@ -74,35 +74,5 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
-
-    public IActionResult Quiz()
-    {
-        Quiz model = new Quiz();
-        return View(model);
-    }
-    
-    [HttpPost]
-    public IActionResult Quiz(string answer1, string answer2, string answer3, string answer4, string answer5)
-    {
-        Quiz model = new Quiz();
-        
-        model.Questions[0].UserAnswer = answer1;
-        model.Questions[0].IsCorrect = model.CheckAnswer(model.Questions[0]);
-        
-        model.Questions[1].UserAnswer = answer2;
-        model.Questions[1].IsCorrect = model.CheckAnswer(model.Questions[1]);
-        
-        model.Questions[2].UserAnswer = answer3;
-        model.Questions[2].IsCorrect = model.CheckAnswer(model.Questions[2]);
-        
-        model.Questions[3].UserAnswer = answer4;
-        model.Questions[3].IsCorrect = model.CheckAnswer(model.Questions[3]);
-
-        model.Questions[4].UserAnswer = answer5;
-        model.Questions[4].IsCorrect = model.CheckAnswer(model.Questions[4]);
-        
-        
-        return View(model);
-    }
 }
 
