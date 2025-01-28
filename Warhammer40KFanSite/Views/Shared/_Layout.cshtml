@@ -57,30 +57,32 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="UserVm" asp-action="Index">Manage Users</a>
                         </li>
 
-                        @if (signInManager.IsSignedIn(User))
-                        {
-                            <li class="nav-item">
-                                <form method="post" asp-action="Logout" asp-controller="RegisterVm">
-                                    <input type="submit" value="Log Out" class="btn btn-outline-dark"/>
-                                    <span class="text-dark">@User.Identity.Name</span>
-                                </form>
-                            </li>
-                        }
-                        else
-                        {
-                            // Get current action
-                            var action = ViewContext.RouteData.Values["action"]?.ToString();
-                            // anonymous user - Register link and Log In button
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="RegisterVm" asp-action="Register">
-                                    <span class="fas fa-edit"></span> &nbsp; Register </a>
-                            </li>
-                            <li class="nav-item">
-                                <a asp-action="LogIn" asp-controller="RegisterVm" class="btn btn-outline-dark">
-                                    Log In
-                                </a>
-                            </li>
-                        }
+                        <div class="container" style="justify-content: flex-end;">
+                            @if (signInManager.IsSignedIn(User))
+                            {
+                                <li class="nav-item">
+                                    <form method="post" asp-action="Logout" asp-controller="RegisterVm">
+                                        <input type="submit" value="Log Out" class="btn btn-outline-dark"/>
+                                        <span class="text-dark">@User.Identity.Name</span>
+                                    </form>
+                                </li>
+                            }
+                            else
+                            {
+                                // Get current action
+                                var action = ViewContext.RouteData.Values["action"]?.ToString();
+                                // anonymous user - Register link and Log In button
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="RegisterVm" asp-action="Register">
+                                        <span class="fas fa-edit"></span> &nbsp; Register </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-action="LogIn" asp-controller="RegisterVm" class="btn btn-outline-dark">
+                                        Log In
+                                    </a>
+                                </li>
+                            }
+                        </div>
                     </ul>
                 </div>
             </div>
