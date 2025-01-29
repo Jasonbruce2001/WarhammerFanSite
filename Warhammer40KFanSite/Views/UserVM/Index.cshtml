@@ -21,7 +21,7 @@
         {
             @foreach (AppUser user in Model.Users)
             {
-                <tr>
+                <tr class="align-middle">
                     <td>@user.UserName</td>
                     <td>
                         @foreach (string roleName in user.RoleNames)
