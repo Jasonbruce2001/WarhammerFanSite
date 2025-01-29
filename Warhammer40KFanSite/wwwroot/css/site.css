@@ -62,6 +62,10 @@ body {
   margin-right: 1vw;
 }
 
+.tableButtons {
+  text-align: center;
+}
+
 @media only screen and (min-width: 1200px) {
   .modalButton {
     width: 15%;
