@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Warhammer40KFanSite.Models;
@@ -11,6 +12,9 @@ public class ApplicationDbContext : IdentityDbContext
     public ApplicationDbContext(
         DbContextOptions<ApplicationDbContext> options) : base(options) { }
   
+    //seeding roles
+    
+    
     // one DbSet for each domain model class
     public DbSet<Quiz> Quizzes { get; set; }
     public DbSet<Question> Questions { get; set; }

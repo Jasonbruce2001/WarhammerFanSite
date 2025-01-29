@@ -13,7 +13,7 @@ namespace FakeStoryRepoTests
 
         public FakeStoryRepoTests()
         {
-            _controller = new HomeController(_repo);
+            //_controller = new HomeController(_repo);
         }
 
         [Fact]

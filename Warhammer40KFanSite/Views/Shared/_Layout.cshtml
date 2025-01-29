@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<AppUser> signInManager
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +34,6 @@
                                     <li><a class="dropdown-item" href="/Home/#">Home</a></li>
                                     <li><a class="dropdown-item" href="/Home/History">History</a></li>
                                     <li><a class="dropdown-item" href="/Home/Stories">Stories</a></li>
-                                    <li><a class="dropdown-item" href="/Home/Quiz">Quiz</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -52,33 +52,40 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="BookClub" asp-action="Index">Book Club</a>
                         </li>
-                        <!-- Register link non dynamic
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="RegisterVM" asp-action="Register">Login/Register</a>
-                        </li> -->
-                        @if (signInManager.IsSignedIn(User))
+                        
+                        @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <form method="post" asp-action="Logout" asp-controller="RegisterVm">
-                                    <input type="submit" value="Log Out" class="btn btn-outline-dark"/>
-                                    <span class="text-dark">@User.Identity.Name</span>
-                                </form>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="UserVm" asp-action="Index">Manage Users</a>
                             </li>
+                        }
+                    </ul>
+                    
+                    <!-- Log-in/log-out -->
+                    <ul class="nav navbar navbar-right">
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                        <li class="nav-item">
+                            <form method="post" asp-action="Logout" asp-controller="RegisterVm">
+                                <span class="text-dark LogOut">@User.Identity.Name</span>
+                                <input type="submit" value="Log Out" class="btn btn-outline-dark"/>
+                            </form>
+                        </li>
                         }
                         else
                         {
-                            // Get current action
-                            var action = ViewContext.RouteData.Values["action"]?.ToString();
-                            // anonymous user - Register link and Log In button
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="RegisterVm" asp-action="Register">
-                                    <span class="fas fa-edit"></span> &nbsp; Register </a>
-                            </li>
-                            <li class="nav-item">
-                                <a asp-action="LogIn" asp-controller="RegisterVm" class="btn btn-outline-dark">
-                                    Log In
-                                </a>
-                            </li>
+                        // Get current action
+                        var action = ViewContext.RouteData.Values["action"]?.ToString();
+                        // anonymous user - Register link and Log In button
+                        <li class="nav-item">
+                            <a class="btn btn-outline-dark register" asp-controller="RegisterVm" asp-action="Register">
+                                <span class="fas fa-edit"></span> &nbsp; Register </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-dark" asp-action="LogIn" asp-controller="RegisterVm">
+                                Log In
+                            </a>
+                        </li>
                         }
                     </ul>
                 </div>
