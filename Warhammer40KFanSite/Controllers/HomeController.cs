@@ -49,7 +49,7 @@ public class HomeController : Controller
     public IActionResult FilterNewest()
     {
         var stories = _storyRepo.GetStories()
-            .OrderBy(s => s.StoryDate)
+            .OrderByDescending(s => s.StoryDate)
             .ToList();
         
         return View("Stories", stories);
@@ -57,7 +57,7 @@ public class HomeController : Controller
     public IActionResult FilterOldest()
     {
         var stories = _storyRepo.GetStories()
-            .OrderByDescending(s => s.StoryDate)
+            .OrderBy(s => s.StoryDate)
             .ToList();
         
         return View("Stories", stories);
