@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Warhammer40KFanSite.Data;
 using Warhammer40KFanSite.Models;
-using Warhammer40KFanSite.QuizModel;
 
 namespace Warhammer40KFanSite.Controllers;
 
