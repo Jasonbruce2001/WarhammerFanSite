@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Warhammer40KFanSite.Data;
 using Warhammer40KFanSite.Models;
-using Warhammer40KFanSite.QuizModel;
 
 namespace Warhammer40KFanSite.Controllers;
 
@@ -36,26 +35,42 @@ public class HomeController : Controller
         return View(stories);
     }
     
-    public IActionResult Filter(string title, string date)
+    public IActionResult Filter(string title, string author)
     {
         var stories = _storyRepo.GetStories()
             .Where(s => title == null || s.StoryTitle == title)
-            .Where(s => date == null || s.StoryDate == DateTime.Parse(date))
+            .Where(s => author == null || s.StoryAuthor.UserName == author)
+            .ToList();
+            
+        return View("Stories", stories);
+    }
+
+    public IActionResult FilterNewest()
+    {
+        var stories = _storyRepo.GetStories()
+            .OrderByDescending(s => s.StoryDate)
+            .ToList();
+        
+        return View("Stories", stories);
+    }
+    public IActionResult FilterOldest()
+    {
+        var stories = _storyRepo.GetStories()
+            .OrderBy(s => s.StoryDate)
             .ToList();
         
         return View("Stories", stories);
     }
     
     [HttpPost]
-    public IActionResult Stories(Story model)
+    public async Task<IActionResult> Stories(Story model)
     {
         //AppUser user1 = new AppUser() { AccountAge = DateOnly.FromDateTime(DateTime.Now), UserName = "Test" };
+        model.StoryAuthor = await _userManager.GetUserAsync(User);
         
-        model.StoryAuthor = _userManager.GetUserAsync(User).Result;
-        
-        if (_storyRepo.StoreStory(model) > 0)
+        if (_storyRepo.StoreStoryAsync(model).Result > 0)
         {
-            return View(_storyRepo.GetStories());
+            return View( _storyRepo.GetStories());
         }
         else
         {

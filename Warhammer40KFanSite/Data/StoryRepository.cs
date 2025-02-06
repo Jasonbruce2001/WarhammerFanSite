@@ -13,7 +13,8 @@ public class StoryRepository : IStoryRepository
     {
         _context = appDbContext;
     }
-
+    
+    //Synchronous because of where clauses  
     public List<Story> GetStories()
     {
         return _context.Stories
@@ -23,18 +24,25 @@ public class StoryRepository : IStoryRepository
 
     public Story GetStoryById(int id)
     {
-        var story = _context.Stories
-            .Include(story => story.StoryAuthor)    
-            .Where(story => story.StoryID == id)
-            .SingleOrDefault();
-        return story;
+        if (_context.Stories.Any())
+        {
+            var story = _context.Stories    
+                .Include(story => story.StoryAuthor)
+                .SingleOrDefault(story => story.StoryID == id);
+            return story;
+        }
+        
+        return new Story();
     }
    
-    public int StoreStory(Story model)
+    //async methods
+    public async Task<int> StoreStoryAsync(Story model)
     {
         model.StoryDate = DateTime.Now;
         _context.Stories.Add(model);
-        return _context.SaveChanges();
-        // returns a positive value if succussful
+        
+        Task<int> task = _context.SaveChangesAsync();
+        int result = await task;
+        return result; // returns a positive value if succussful
     }
 }
