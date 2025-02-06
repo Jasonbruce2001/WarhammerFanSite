@@ -13,33 +13,8 @@ public class StoryRepository : IStoryRepository
     {
         _context = appDbContext;
     }
-
-    /* OLD - Synchronous methods, delete when finished
-    public List<Story> GetStories()
-    {
-        return _context.Stories
-            .Include(story => story.StoryAuthor)    
-            .ToList();
-    }
-
-    public Story GetStoryById(int id)
-    {
-        var story = _context.Stories
-            .Include(story => story.StoryAuthor)    
-            .Where(story => story.StoryID == id)
-            .SingleOrDefault();
-        return story;
-    }
-   
-    public int StoreStory(Story model)
-    {
-        model.StoryDate = DateTime.Now;
-        _context.Stories.Add(model);
-        return _context.SaveChanges();
-        // returns a positive value if succussful
-    }*/
     
-    //async methods
+    //Synchronous because of where clauses  
     public List<Story> GetStories()
     {
         return _context.Stories
@@ -60,6 +35,7 @@ public class StoryRepository : IStoryRepository
         return new Story();
     }
    
+    //async methods
     public async Task<int> StoreStoryAsync(Story model)
     {
         model.StoryDate = DateTime.Now;
