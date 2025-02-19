@@ -1,0 +1,35 @@
+@model Tuple<Story,List<Comment>>
+@{
+    Story story = Model.Item1;
+    List<Comment> comments = Model.Item2;
+}
+
+<div class="story clearfix shadow bg-white rounded">
+    <h1>@story.StoryTitle</h1>
+    <h4>@story.StoryTopic by <i>@story.StoryAuthor.UserName</i></h4>
+    <p>@story.StoryText </p>
+    <div class="row">
+        <div class="col-6">
+            <p class="float-end">Posted @story.StoryDate</p>
+        </div>
+    </div>
+</div>
+
+<div class="story clearfix shadow bg-white rounded my-3">
+    @if (comments.Any())
+    {
+    @foreach (Comment c in comments)
+    {
+    <div class="row">
+        <h3>@c.Author.UserName - @c.DatePosted</h3>
+        <h4>@c.Content</h4>
+    </div>
+    }
+    }
+    else
+    {
+    <div class="row">
+        <h3>No Comments - Start the conversation!</h3>
+    </div>
+    }
+</div>

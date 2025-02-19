@@ -19,4 +19,5 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Quiz> Quizzes { get; set; }
     public DbSet<Question> Questions { get; set; }
     public DbSet<Story> Stories { get; set; }
+    public DbSet<Comment> Comments { get; set; }
 }

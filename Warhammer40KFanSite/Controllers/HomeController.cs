@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Reflection.Metadata;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Warhammer40KFanSite.Data;
@@ -11,12 +10,14 @@ public class HomeController : Controller
 {
     // private field
     IStoryRepository _storyRepo;
+    ICommentRepository _commentRepo;
     private UserManager<AppUser> _userManager; 
     private SignInManager<AppUser> _signInManager;
-    public HomeController(UserManager<AppUser> userMngr, SignInManager<AppUser> signInMngr, IStoryRepository r)
+    public HomeController(UserManager<AppUser> userMngr, SignInManager<AppUser> signInMngr, IStoryRepository r, ICommentRepository c)
     {
         _userManager = userMngr; _signInManager = signInMngr;
         _storyRepo = r;
+        _commentRepo = c;
     } 
 
     public IActionResult Index()
@@ -60,6 +61,22 @@ public class HomeController : Controller
             .ToList();
         
         return View("Stories", stories);
+    }
+
+    public IActionResult ViewComments(int storyId)
+    {
+        Story story = _storyRepo.GetStoryById(storyId);
+        List<Comment> comments = _commentRepo.GetCommentsByStoryId(storyId);
+        
+        var tuple = new Tuple<Story,List<Comment>>(story,comments);
+        return View("StoryDetailed", tuple);
+    }
+
+    public IActionResult _CommentsPartial(int storyId)
+    {
+        List<Comment> comments = _commentRepo.GetCommentsByStoryId(storyId);
+        
+        return View(comments);
     }
     
     [HttpPost]

@@ -29,7 +29,12 @@ public class SeedData
             // Save stories to db context
             context.Stories.Add(story1);
             context.Stories.Add(story2);
-            context.SaveChanges(); 
+            context.SaveChanges();
+
+            Comment comment1 = new Comment() { Content = "Love it!", Author = jasonBruce, DatePosted = DateTime.Now, StoryId = 1 };
+            Comment comment2 = new Comment() { Content = "Awesome!", Author = wyattQualiana, DatePosted = DateTime.Now, StoryId = 1 };
+            context.Comments.Add(comment1);
+            context.Comments.Add(comment2);
         }
     }
     

@@ -111,9 +111,16 @@
 
                 <div class="story clearfix shadow bg-white rounded">
                     <h1>@story.StoryTitle</h1>
-                <h4>@story.StoryTopic by <i>@story.StoryAuthor.UserName</i></h4>
+                    <h4>@story.StoryTopic by <i>@story.StoryAuthor.UserName</i></h4>
                     <p>@story.StoryText </p>
-                    <p class="float-end">Posted @story.StoryDate</p>
+                    <div class="row">
+                        <div class="col-6">
+                            <p><a asp-action="ViewComments" asp-route-storyId="@story.StoryID">View Comments</a></p>
+                        </div>
+                        <div class="col-6">
+                            <p class="float-end">Posted @story.StoryDate</p>
+                        </div>
+                    </div>
                 </div>
                 alt = !alt;
             }
@@ -123,7 +130,14 @@
                     <h1>@story.StoryTitle</h1>
                     <h4>@story.StoryTopic by <i>@story.StoryAuthor.UserName</i></h4>
                     <p>@story.StoryText </p>
-                    <p class="float-end">Posted @story.StoryDate</p>
+                    <div class="row">
+                        <div class="col-6">
+                            <p><a asp-action="ViewComments" asp-route-storyId="@story.StoryID">View Comments</a></p>
+                        </div>
+                        <div class="col-6">
+                            <p class="float-end">Posted @story.StoryDate</p>
+                        </div>
+                    </div>
                 </div>
 
                 alt = !alt;
