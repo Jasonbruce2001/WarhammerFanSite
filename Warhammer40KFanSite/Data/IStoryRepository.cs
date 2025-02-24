@@ -5,10 +5,6 @@ namespace Warhammer40KFanSite.Data;
 public interface IStoryRepository
 {
     public List<Story> GetStories();
-    public Story GetStoryById(int id);
-
-    //asynchronous versions
-    public Task<int> StoreStoryAsync(Story model);  
-    public int DeleteStory(int id);
-
+    public Story GetStoryById(int id); // Returns a model object
+    public int StoreStory(Story model);   
 }

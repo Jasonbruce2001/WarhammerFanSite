@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Warhammer40KFanSite.Controllers;
 using Warhammer40KFanSite.Data;
@@ -10,32 +9,29 @@ namespace FakeStoryRepoTests
     {
         readonly IStoryRepository _repo = new FakeStoryRepository();
         readonly HomeController _controller;
-        readonly UserManager<AppUser> _userManager;
-        readonly SignInManager<AppUser> _signInManager;
         readonly Story _story = new Story();
-        
+
         public FakeStoryRepoTests()
         {
-            //_controller = new HomeController(_userManager, _signInManager, _repo);
+            //_controller = new HomeController(_repo);
         }
 
         [Fact]
         public void Story_PostTest_Success()
         {
             _story.StoryDate = DateTime.Now;
-            _story.StoryTitle = "Test Story Title";
-            Task<IActionResult> result = _controller.Stories(_story);
+            IActionResult result = _controller.Stories(_story);
             
-            Assert.True(result.GetType() == typeof(Task<IActionResult>));
+            Assert.True(result.GetType() == typeof(ViewResult));
         }
 
 
         [Fact]
         public void Review_PostTest_Failure()
         {
-            Task<IActionResult> result = _controller.Stories(_story);
+            IActionResult result = _controller.Stories(_story);
             
-            Assert.True(result.GetType() == typeof(Task<IActionResult>));
+            Assert.True(result.GetType() == typeof(ViewResult));
         }
     }
 }
