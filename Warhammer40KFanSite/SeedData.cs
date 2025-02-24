@@ -31,10 +31,11 @@ public class SeedData
             context.Stories.Add(story2);
             context.SaveChanges();
 
-            Comment comment1 = new Comment() { Content = "Love it!", Author = jasonBruce, DatePosted = DateTime.Now, StoryId = 1 };
-            Comment comment2 = new Comment() { Content = "Awesome!", Author = wyattQualiana, DatePosted = DateTime.Now, StoryId = 1 };
+            Comment comment1 = new Comment() { Content = "Love it!", Author = jasonBruce, DatePosted = DateTime.Now, StoryId = story1.StoryID };
+            Comment comment2 = new Comment() { Content = "Awesome!", Author = wyattQualiana, DatePosted = DateTime.Now, StoryId = story2.StoryID };
             context.Comments.Add(comment1);
             context.Comments.Add(comment2);
+            context.SaveChanges();
         }
     }
     

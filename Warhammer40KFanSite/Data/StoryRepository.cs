@@ -7,7 +7,7 @@ namespace Warhammer40KFanSite.Data;
 
 public class StoryRepository : IStoryRepository
 {
-    private ApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
 
     public StoryRepository(ApplicationDbContext appDbContext)
     {
@@ -43,6 +43,14 @@ public class StoryRepository : IStoryRepository
         
         Task<int> task = _context.SaveChangesAsync();
         int result = await task;
-        return result; // returns a positive value if succussful
+        return result; // returns a positive value if successful
+    }
+    
+    public int DeleteStory(int id)
+    {
+        Story story = GetStoryById(id);
+        _context.Stories.Remove(story);
+        
+        return _context.SaveChanges();
     }
 }

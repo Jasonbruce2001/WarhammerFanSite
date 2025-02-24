@@ -9,4 +9,6 @@ public interface IStoryRepository
 
     //asynchronous versions
     public Task<int> StoreStoryAsync(Story model);  
+    public int DeleteStory(int id);
+
 }

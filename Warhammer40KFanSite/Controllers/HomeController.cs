@@ -72,11 +72,18 @@ public class HomeController : Controller
         return View("StoryDetailed", tuple);
     }
 
-    public IActionResult _CommentsPartial(int storyId)
+    public IActionResult DeleteStory(int storyId)
     {
+        //First, delete comments attached to story
         List<Comment> comments = _commentRepo.GetCommentsByStoryId(storyId);
+        _commentRepo.DeleteComments(comments);
         
-        return View(comments);
+        //Next, delete desired story
+        _storyRepo.DeleteStory(storyId);
+
+        //since in detailed view, return user to main story page after deletion
+        List<Story> stories = _storyRepo.GetStories();
+        return RedirectToAction("stories", stories);
     }
     
     [HttpPost]
@@ -92,6 +99,27 @@ public class HomeController : Controller
         else
         {
             ViewBag.ErrorMessage = "There was an error saving the story.";
+            return View();
+        }
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> Comment(Comment model, int storyId)
+    {
+        model.Author = await _userManager.GetUserAsync(User);
+        
+        if (_commentRepo.StoreCommentAsync(model).Result > 0)
+        {
+            Story story = _storyRepo.GetStoryById(storyId);
+            List<Comment> comments = _commentRepo.GetCommentsByStoryId(storyId);
+        
+            var tuple = new Tuple<Story,List<Comment>>(story,comments);
+            
+            return View("StoryDetailed", tuple);
+        }
+        else
+        {
+            ViewBag.ErrorMessage = "There was an error saving the Comment.";
             return View();
         }
     }

@@ -54,4 +54,9 @@ public class FakeStoryRepository: IStoryRepository
 
             return status;
         }
+
+        public int DeleteStory(int id)
+        {
+            throw new NotImplementedException();
+        }
 }

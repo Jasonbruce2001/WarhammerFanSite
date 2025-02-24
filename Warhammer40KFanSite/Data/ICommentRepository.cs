@@ -7,4 +7,5 @@ public interface ICommentRepository
     public List<Comment> GetCommentsByStoryId(int id);
     public Comment GetCommentById(int id);
     public Task<int> StoreCommentAsync(Comment c); //need to make async
+    public int DeleteComments(List<Comment> comments);
 }

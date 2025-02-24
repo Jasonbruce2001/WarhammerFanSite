@@ -33,4 +33,10 @@ public class CommentRepository : ICommentRepository
         int result = await task;
         return result; // returns a positive value if succussful
     }
+
+    public int DeleteComments(List<Comment> comments)
+    {
+        _context.Comments.RemoveRange(comments);
+        return _context.SaveChanges();
+    }
 }
