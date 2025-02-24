@@ -3,16 +3,23 @@
     ViewBag.Title = "Manage Users";
 }
 
-<h1 class="mb-2">Manage Users</h1> 
-<h5 class="mt-2">
-    <a asp-action="Add">Add a User</a>
-</h5>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h1 class="mb-2">Manage Users</h1>
+        </div>
+        <div class="col text-end" style="align-content: center;">
+            <h5 class="mt-2">
+                <a asp-action="Add">Add a User</a>
+            </h5> 
+        </div>
+    </div>
 
-<table class="table table-bordered table-striped table-sm">
-    <thead>
+    <table class="table table-bordered table-striped table-sm">
+        <thead>
         <tr><th>Username</th><th>Roles</th><th></th><th></th><th></th></tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         @if (Model.Users.Count() == 0)
         {
             <tr><td colspan="5">There are no user accounts.</td></tr>
@@ -54,5 +61,17 @@
                 </tr>
             }
         }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+    
+    <div class="row text-center">
+        <div class="col">
+            <a asp-action="Index" asp-controller="StoryAdmin">Stories</a>
+        </div>
+        <div class="col">
+            <a asp-action="Index" asp-controller="CommentsAdmin">Comments</a>
+        </div>
+        <div class="col-8"></div>
+    </div>
+</div>
+

@@ -1,0 +1,46 @@
+@model Warhammer40KFanSite.Models.Story
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Story</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="StoryID" />
+            <div class="form-group">
+                <label asp-for="StoryTitle" class="control-label"></label>
+                <input asp-for="StoryTitle" class="form-control" />
+                <span asp-validation-for="StoryTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StoryTopic" class="control-label"></label>
+                <input asp-for="StoryTopic" class="form-control" />
+                <span asp-validation-for="StoryTopic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StoryText" class="control-label"></label>
+                <input asp-for="StoryText" class="form-control" />
+                <span asp-validation-for="StoryText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StoryDate" class="control-label"></label>
+                <input asp-for="StoryDate" class="form-control" />
+                <span asp-validation-for="StoryDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
