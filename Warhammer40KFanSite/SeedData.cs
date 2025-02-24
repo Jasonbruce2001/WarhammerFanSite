@@ -29,7 +29,13 @@ public class SeedData
             // Save stories to db context
             context.Stories.Add(story1);
             context.Stories.Add(story2);
-            context.SaveChanges(); 
+            context.SaveChanges();
+
+            Comment comment1 = new Comment() { Content = "Love it!", Author = jasonBruce, DatePosted = DateTime.Now, StoryId = story1.StoryID };
+            Comment comment2 = new Comment() { Content = "Awesome!", Author = wyattQualiana, DatePosted = DateTime.Now, StoryId = story2.StoryID };
+            context.Comments.Add(comment1);
+            context.Comments.Add(comment2);
+            context.SaveChanges();
         }
     }
     
@@ -57,7 +63,7 @@ public class SeedData
             var result = await userManager.CreateAsync(user, password); 
             if (result.Succeeded) {
                 await userManager.AddToRoleAsync(user, roleName); 
-            } 
+            }
         } 
     }
 }

@@ -13,7 +13,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddTransient<IStoryRepository, StoryRepository>();
+builder.Services.AddTransient<IStoryRepository, StoryRepository>()
+                .AddTransient<ICommentRepository, CommentRepository>();
 
 //add Identity
 builder.Services.AddIdentity<AppUser, IdentityRole>()
