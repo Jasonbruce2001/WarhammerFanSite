@@ -54,13 +54,14 @@
 
 <!-- Replies -->
 <div class="row">
-    <div class="col-3"></div>
-    <div class="col-5">
-        <textarea class="commentBox"></textarea>
-    </div>
-    <div class="col-1">
-        <a class="btn btn-primary" asp-action="addComment" asp-route-id="@story.StoryID">Post</a>
-    </div>
-    <div class="col-3"></div>
-    
+    <form method="post" asp-action="Comment" asp-route-storyId="@story.StoryID">
+        <div class="col">
+            <div class="row">
+                <label>Comment:</label>
+                <input type="text" name="Content" class="commentBox">
+            </div>
+
+            <input class="mt-1" type="submit" value="Submit">
+        </div>
+    </form>
 </div>
