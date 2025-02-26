@@ -21,7 +21,6 @@
 </div>
 
 <div class="story clearfix shadow bg-white rounded p-3">
-    
     <div class="row">
         <div class="col">
             <h2>@story.StoryTitle by <i>@story.StoryAuthor.UserName</i></h2>
@@ -32,23 +31,19 @@
         </div>
     </div>
     <div class="row">
-        <p>@story.StoryText </p>
+        <p>@story.StoryText</p>
     </div>
-    <div class="row">
-        
-    </div>
-
 </div>
 
 <!-- comment area -->
-<div class="story clearfix shadow bg-white rounded my-3">
+<div class="container-fluid">
     @if (comments.Any())
     {
         @foreach (Comment c in comments)
         {
-            <div class="row">
-                <h3>@c.Author.UserName - @c.DatePosted</h3>
-                <h4>@c.Content</h4>
+            <div class="row comment mx-5 mb-4">
+                <h5>@c.Author.UserName - @c.DatePosted</h5>
+                <p>@c.Content</p>
             </div>
         }
     }
@@ -63,13 +58,17 @@
 <!-- Replies -->
 <form method="post" asp-action="Comment" asp-route-storyId="@story.StoryID">
     <div class="row">
+        <div class="col-2"></div>
         <div class="col-8 ms-5">
             <label>Comment:</label><br/>
             <textarea name="Content" class="commentBox"></textarea>
         </div>
-
-        <div class="col-1 d-flex justify-content-center align-items-center">
-            <input class="commentSubmit btn btn-primary" type="submit" value="Submit">
+        <div class="col-2"></div>
+    </div>
+    <div class="row">
+        <div class="col-8"></div>
+        <div class="col">
+            <input class="commentSubmit btn btn-primary ms-xl-5" type="submit" value="Submit">
         </div>
     </div>
 </form>
