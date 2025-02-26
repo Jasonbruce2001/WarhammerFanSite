@@ -1,5 +1,8 @@
 @model List<Story>
 
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> signInManager
+
 @{
     ViewData["Title"] = "Stories";
 }
@@ -15,17 +18,26 @@
 <div class="container">
     <div class="row text-center">
         <h1 class="display-4">User Stories</h1>
-        <p>This page will be used for forum style discussions between users</p>
+        @if (signInManager.IsSignedIn(User))
+        {
+            <p>Welcome - Press the button below to get started!</p>
+            
+            <!-- Button for modal -->
+            <div class="text-center">
+                <button type="button" class="btn btn-primary modalButton" data-bs-toggle="modal" data-bs-target="#createPostModal">
+                    Create Post
+                </button>
+            </div>
+        }
+        else
+        {
+            <p>Welcome - To get started, you must be signed in.</p>
+            <a asp-action="Register" asp-controller="RegisterVm">Register Now</a>
+            <a asp-action="Login" asp-controller="RegisterVm">Log in</a>
+        }
     </div>
     
-    <div class="row">
-        <!-- Button for modal -->
-        <div class="text-center">
-            <button type="button" class="btn btn-primary modalButton" data-bs-toggle="modal" data-bs-target="#createPostModal">
-                Create Post
-            </button>
-        </div>
-    </div>
+    
     <!-- Modal -->
     <div class="row">
         <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="createPostModalLabel" aria-hidden="true">
@@ -76,7 +88,7 @@
             <input name="title" style="margin: 0 1vw 1vw 0;"/>
             <label name="author">Author -</label>
             <input name="author"/>
-            <button class="btn btn-primary" type="submit" style="margin-bottom: 1vw;">Filter</button>
+            <button class="btn btn-primary" type="submit" style="margin-bottom: 1vw;">Search</button>
         </form>
     </div>
     
@@ -102,46 +114,24 @@
 <div class="storyArea border">
     @if (Model.Count > 0)
     {
-        //flag for if story should be given a grey or white background to help visually break up stories
-        bool alt = false;
         foreach (Story story in Model)
         {
-            if (!alt)
-            {
-
-                <div class="story clearfix shadow bg-white rounded">
-                    <h1>@story.StoryTitle</h1>
-                    <h4>@story.StoryTopic by <i>@story.StoryAuthor.UserName</i></h4>
-                    <p>@story.StoryText </p>
-                    <div class="row">
-                        <div class="col-6">
-                            <p><a asp-action="ViewComments" asp-route-storyId="@story.StoryID">View Comments</a></p>
-                        </div>
-                        <div class="col-6">
-                            <p class="float-end">Posted @story.StoryDate</p>
-                        </div>
+            <div class="story clearfix shadow bg-white rounded">
+                <h1>@story.StoryTitle</h1>
+                <h4>@story.StoryTopic by <i>@story.StoryAuthor.UserName</i></h4>
+                <p>@story.StoryText </p>
+                <div class="row">
+                    <div class="col-6">
+                        <p>Posted @story.StoryDate</p>
+                    </div>
+                    <div class="col-6">
+                        <p class="float-end">
+                            <a class="btn btn-secondary" asp-action="ViewComments" asp-route-storyId="@story.StoryID">
+                                View Comments <i class="bi bi-chat-left-text ms-1"></i>
+                            </a></p>
                     </div>
                 </div>
-                alt = !alt;
-            }
-            else
-            {
-                <div class="story clearfix shadow bg-lightgrey rounded" style="background-color: lightgrey;">
-                    <h1>@story.StoryTitle</h1>
-                    <h4>@story.StoryTopic by <i>@story.StoryAuthor.UserName</i></h4>
-                    <p>@story.StoryText </p>
-                    <div class="row">
-                        <div class="col-6">
-                            <p><a asp-action="ViewComments" asp-route-storyId="@story.StoryID">View Comments</a></p>
-                        </div>
-                        <div class="col-6">
-                            <p class="float-end">Posted @story.StoryDate</p>
-                        </div>
-                    </div>
-                </div>
-
-                alt = !alt;
-            }
+            </div>
         }
     }
     else
