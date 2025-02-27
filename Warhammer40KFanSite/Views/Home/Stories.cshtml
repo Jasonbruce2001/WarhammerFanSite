@@ -14,130 +14,160 @@
     }
 </script>
 
-<!-- Form container start -->
 <div class="container">
-    <div class="row text-center">
-        <h1 class="display-4">User Stories</h1>
-        @if (signInManager.IsSignedIn(User))
-        {
-            <p>Welcome - Press the button below to get started!</p>
-            
-            <!-- Button for modal -->
-            <div class="text-center">
-                <button type="button" class="btn btn-primary modalButton text-center" data-bs-toggle="modal" data-bs-target="#createPostModal">
-                    Create Post
-                </button>
-            </div>
-        }
-        else
-        {
+    <!-- Form container start -->
+    <div class="container">
+        <div class="row text-center">
+            <h1 class="display-4">User Stories</h1>
+            @if (signInManager.IsSignedIn(User))
+            {
+            <p>Welcome!</p>
+            }
+            else
+            {
             <p>Welcome - To get started, you must be signed in.</p>
             <a asp-action="Register" asp-controller="RegisterVm">Register Now</a>
             <a asp-action="Login" asp-controller="RegisterVm">Log in</a>
-        }
-    </div>
-    
-    
-    <!-- Modal -->
-    <div class="row">
-        <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="createPostModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="createPostModalLabel">Create Post</h5>
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Form input -->
-                        <div class="formArea">
-                            <form method="post">
-                                <div class="col">
-                                    <div class="row">
-                                        <label>Title:</label>
-                                        <input type="text" name="StoryTitle" class="storyOther">
-                                    </div>
+            }
+        </div>
 
-                                    <div class="row">
-                                        <label>Topic:</label>
-                                        <input type="text" name="StoryTopic" class="storyOther">
+        <!-- Modal -->
+        <div class="row">
+            <div class="modal fade" id="createPostModal" tabindex="-1" role="dialog" aria-labelledby="createPostModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="createPostModalLabel">Create Post</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Form input -->
+                            <div class="formArea">
+                                <form method="post">
+                                    <div class="col">
+                                        <div class="row">
+                                            <label>Title:</label>
+                                            <input type="text" required name="StoryTitle" class="storyOther">
+                                        </div>
+
+                                        <div class="row">
+                                            <label>Topic:</label>
+                                            <input type="text" required name="StoryTopic" class="storyOther">
+                                        </div>
+
+                                        <div class="row">
+                                            <label>Text:</label>
+                                            <textarea required name="storyText" class="storyText"></textarea>
+                                        </div>
+
+                                        <input type="submit" value="Submit" style="margin-top: 5%;">
                                     </div>
-                            
-                                    <div class="row">
-                                        <label>Text:</label>
-                                        <textarea name="storyText" class="storyText"></textarea>
-                                    </div>
-                                
-                                    <input type="submit" value="Submit" style="margin-top: 5%;">
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div> <!-- Form container end -->
+    </div> <!-- Form container end -->
 
-<!-- Filter -->
-<div class="container-fluid d-inline-flex">
-    <div class="col">
-        <form method="post" action="/Home/Filter">
-            <label name="title" style="margin-bottom: 1vw;">Title -</label>
-            <input name="title" style="margin: 0 1vw 1vw 0;"/>
-            <label name="author">Author -</label>
-            <input name="author"/>
-            <button class="btn btn-primary" type="submit" style="margin-bottom: 1vw;">Search</button>
-        </form>
-    </div>
-    
-    <div class="col storyFilters">
-        <!-- Action links for filters -->
-        @Html.ActionLink("Filter Newest",
-            "FilterNewest",
-            "Home",
-            null,
-            null
-        )
+    <!-- Filters -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Button for modal -->
+            <div class="col-2 align-content-end">
+                <button type="button" class="btn btn-primary modalButton text-center" data-bs-toggle="modal" data-bs-target="#createPostModal">
+                    Create Post
+                </button>
+            </div>
 
-        @Html.ActionLink("Filter Oldest",
-            "FilterOldest",
-            "Home",
-            null,
-            null
-        )
-    </div>
-</div>
+            <!-- search filter -->
+            <div class="col-3">
+                <form method="post" action="/Home/Filter">
+                    <div class="row">
+                        <div class="col">
+                            <label name="title">Title -</label>
+                        </div>
+                        <div class="col">
+                            <input name="title"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label name="author">Author -</label>
+                        </div>
+                        <div class="col">
+                            <input name="author"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-primary mt-2 ms-1" type="submit" style="margin-bottom: 1vw;">Search</button>
+                    </div>
+                </form>
+            </div>
 
+            <!-- Spacer -->
+            <div class="col-4"></div>
 
-<div class="storyArea border">
-    @if (Model.Count > 0)
-    {
-        foreach (Story story in Model)
-        {
-            <div class="story clearfix shadow bg-white rounded">
-                <h1>@story.StoryTitle</h1>
-                <h4>@story.StoryTopic by <i>@story.StoryAuthor.UserName</i></h4>
-                <p>@story.StoryText </p>
+            <!-- date filter -->
+            <div class="col-3 storyFilters align-content-end">
+                <!-- Action links for filters -->
                 <div class="row">
-                    <div class="col-6">
-                        <p>Posted @story.StoryDate</p>
-                    </div>
-                    <div class="col-6">
-                        <p class="float-end">
-                            <a class="btn btn-secondary" asp-action="ViewComments" asp-route-storyId="@story.StoryID">
-                                View Comments <i class="bi bi-chat-left-text ms-1"></i>
-                            </a></p>
-                    </div>
+                    @Html.ActionLink("Filter Newest",
+                    "FilterNewest",
+                    "Home",
+                    null,
+                    null
+                    )
+                </div>
+                <div class="row">
+                    @Html.ActionLink("Filter Oldest",
+                    "FilterOldest",
+                    "Home",
+                    null,
+                    null
+                    )
                 </div>
             </div>
-        }
-    }
-    else
-    {
-    <div class="text-center">
-        <h3>There are no post yet.</h3>
+        </div>
     </div>
-    }
+
+
+    <div class="storyArea">
+        @if (Model.Count > 0)
+        {
+        foreach (Story story in Model)
+        {
+        <div class="story clearfix shadow bg-white rounded">
+            <h1>@story.StoryTitle</h1>
+            <h4>@story.StoryTopic by <i>@story.StoryAuthor.UserName</i></h4>
+            <p>@story.StoryText </p>
+            <div class="row">
+                <div class="col-6">
+                    <p>Posted @story.StoryDate</p>
+                </div>
+                <div class="col-6">
+                    <p class="float-end">
+                        <a class="btn btn-secondary" asp-action="ViewComments" asp-route-storyId="@story.StoryID">
+                            View Comments <i class="bi bi-chat-left-text ms-1"></i>
+                        </a></p>
+                </div>
+            </div>
+        </div>
+        }
+        }
+        else
+        {
+        <div class="text-center">
+            <h3>There are no post yet.</h3>
+        </div>
+        }
+    </div>
 </div>
+
+@section Scripts {
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+}
