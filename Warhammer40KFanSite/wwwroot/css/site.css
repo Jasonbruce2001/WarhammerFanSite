@@ -11,14 +11,13 @@ html {
 
 body {
   margin-bottom: 60px;
-  background-color: #A9B5DF;
 }
 
-.bg-dark {
+/*.bg-dark {
   background-color: #3674B5 !important;
 }
 
-.navbar a, button{
+.navbar a, button, span{
   color: white !important;
 }
 
@@ -32,7 +31,7 @@ body {
 
 .navDrop {
   background-color: #578FCA;
-}
+}*/
 
 .license {
     padding-bottom: 2%;
@@ -49,18 +48,20 @@ body {
   margin: auto 3%;
 }
 
+
+.footer {
+
+}
+
 .story {
   margin: 1%;
   padding-right: 1%;
   padding-left: 1%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  background-color: #3D8D7A;
 }
 
-@media only screen and (max-width: 600px) {
-  .modalButton {
-    width: 40%;
-  }
+.modalButton {
+  width: fit-content;
 }
 
 .QuizInput {
@@ -69,6 +70,10 @@ body {
 
 .LogOut {
   padding-inline: 2vw;
+}
+
+.LogOut:hover {
+  color: black !important;
 }
 
 .register {
@@ -93,11 +98,4 @@ body {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   justify-content: center;
   align-items: center;
-}
-
-@media only screen and (min-width: 1200px) {
-  .modalButton {
-    width: 15%;
-  }
-
 }

@@ -14,20 +14,20 @@
     }
 </script>
 
-<div class="container">
+<div class="container mb-5">
     <!-- Form container start -->
     <div class="container">
         <div class="row text-center">
             <h1 class="display-4">User Stories</h1>
             @if (signInManager.IsSignedIn(User))
             {
-            <p>Welcome!</p>
+                <p>Welcome!</p>
             }
             else
             {
-            <p>Welcome - To get started, you must be signed in.</p>
-            <a asp-action="Register" asp-controller="RegisterVm">Register Now</a>
-            <a asp-action="Login" asp-controller="RegisterVm">Log in</a>
+                <p>Welcome - To get started, you must be signed in.</p>
+                <a asp-action="Register" asp-controller="RegisterVm">Register Now</a>
+                <a asp-action="Login" asp-controller="RegisterVm">Log in</a>
             }
         </div>
 
@@ -116,18 +116,18 @@
                 <!-- Action links for filters -->
                 <div class="row">
                     @Html.ActionLink("Filter Newest",
-                    "FilterNewest",
-                    "Home",
-                    null,
-                    null
+                        "FilterNewest",
+                        "Home",
+                        null,
+                        null
                     )
                 </div>
                 <div class="row">
                     @Html.ActionLink("Filter Oldest",
-                    "FilterOldest",
-                    "Home",
-                    null,
-                    null
+                        "FilterOldest",
+                        "Home",
+                        null,
+                        null
                     )
                 </div>
             </div>
@@ -138,34 +138,35 @@
     <div class="storyArea">
         @if (Model.Count > 0)
         {
-        foreach (Story story in Model)
-        {
-        <div class="story clearfix shadow bg-white rounded">
-            <h1>@story.StoryTitle</h1>
-            <h4>@story.StoryTopic by <i>@story.StoryAuthor.UserName</i></h4>
-            <p>@story.StoryText </p>
-            <div class="row">
-                <div class="col-6">
-                    <p>Posted @story.StoryDate</p>
+            foreach (Story story in Model)
+            {
+                <div class="story clearfix shadow bg-white rounded">
+                    <h1>@story.StoryTitle</h1>
+                    <h4>@story.StoryTopic by <i>@story.StoryAuthor.UserName</i></h4>
+                    <p>@story.StoryText </p>
+                    <div class="row">
+                        <div class="col-6">
+                            <p>Posted @story.StoryDate</p>
+                        </div>
+                        <div class="col-6">
+                            <p class="float-end">
+                                <a class="btn btn-secondary" asp-action="ViewComments" asp-route-storyId="@story.StoryID">
+                                    View Comments <i class="bi bi-chat-left-text ms-1"></i>
+                                </a></p>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-6">
-                    <p class="float-end">
-                        <a class="btn btn-secondary" asp-action="ViewComments" asp-route-storyId="@story.StoryID">
-                            View Comments <i class="bi bi-chat-left-text ms-1"></i>
-                        </a></p>
-                </div>
-            </div>
-        </div>
-        }
+            }
         }
         else
         {
-        <div class="text-center">
-            <h3>There are no post yet.</h3>
-        </div>
+            <div class="text-center">
+                <h3>There are no post yet.</h3>
+            </div>
         }
     </div>
 </div>
+<div class="container-fluid mb-5">&nbsp;</div>
 
 @section Scripts {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
