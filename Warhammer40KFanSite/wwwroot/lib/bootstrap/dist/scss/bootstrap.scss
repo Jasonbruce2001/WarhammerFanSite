@@ -1,6 +1,8 @@
 @import "mixins/banner";
 @include bsBanner("");
 
+// custom theme
+@import "../../../../css/_custom.scss";
 
 // scss-docs-start import-stack
 // Configuration

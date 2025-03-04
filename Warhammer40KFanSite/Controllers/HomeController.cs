@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Warhammer40KFanSite.Data;
@@ -97,6 +98,7 @@ public class HomeController : Controller
         return RedirectToAction("stories", stories);
     }
     
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> Stories(Story model)
     {

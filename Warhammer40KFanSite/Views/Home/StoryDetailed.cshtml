@@ -8,39 +8,46 @@
     List<Comment> comments = Model.Item2;
 }
 
-<div class="story clearfix shadow bg-white rounded p-3">
-    <div class="row">
-        <h1>@story.StoryTitle by <i>@story.StoryAuthor.UserName</i></h1>
+<div class="row">
+    <div class="col">
+        <a class="btn btn-primary ms-3" asp-action="Stories">Back</a>
     </div>
-    <div class="row">
-        <h4>Topic: @story.StoryTopic</h4>
+    <div class="col">
+        @if (User.Identity.Name == story.StoryAuthor.UserName || User.IsInRole("Admin"))
+        {
+            <a class="btn btn-danger float-end me-3" asp-action="DeleteStory" asp-route-storyID="@story.StoryID">Delete Post</a>
+        }
     </div>
+</div>
+
+<div class="story p-3">
     <div class="row">
-        <p>@story.StoryText </p>
-    </div>
-    <div class="row">
-        <div class="col-11">
-            <p>Posted @story.StoryDate</p>
+        <div class="col">
+            <h2>@story.StoryTitle by <i>@story.StoryAuthor.UserName</i></h2>
         </div>
-        <div class="col-1">
-            @if (User.Identity.Name == story.StoryAuthor.UserName || User.IsInRole("Admin"))
-            {
-                <a class="btn btn-primary" asp-action="DeleteStory" asp-route-storyID="@story.StoryID">Delete</a>
-            }
+        <div class="col">
+            <h5><b>Topic:</b> @story.StoryTopic</h5>
+            <h5><b>Posted:</b> @story.StoryDate</h5>
         </div>
     </div>
-    
+    <div class="row">
+        <p>@story.StoryText</p>
+    </div>
 </div>
 
 <!-- comment area -->
-<div class="story clearfix shadow bg-white rounded my-3">
+<div class="container-fluid">
     @if (comments.Any())
     {
         @foreach (Comment c in comments)
         {
-            <div class="row">
-                <h3>@c.Author.UserName - @c.DatePosted</h3>
-                <h4>@c.Content</h4>
+            <div class="row mx-5 mb-4">
+                <div class="col-2"></div>
+                <div class="col-8 comment p-2 px-">
+                    <h5>@c.Author.UserName - @c.DatePosted</h5>
+                    <p>@c.Content</p>
+                </div>
+                <div class="col-2"></div>
             </div>
         }
     }
@@ -53,14 +60,19 @@
 </div>
 
 <!-- Replies -->
-<div class="row">
-    <div class="col-3"></div>
-    <div class="col-5">
-        <textarea class="commentBox"></textarea>
+<form method="post" asp-action="Comment" asp-route-storyId="@story.StoryID">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8 ms-5">
+            <label>Comment:</label><br/>
+            <textarea name="Content" class="commentBox"></textarea>
+        </div>
+        <div class="col-2"></div>
     </div>
-    <div class="col-1">
-        <a class="btn btn-primary" asp-action="addComment" asp-route-id="@story.StoryID">Post</a>
+    <div class="row">
+        <div class="col-8"></div>
+        <div class="col">
+            <input class="commentSubmit btn btn-primary ms-xl-5" type="submit" value="Submit">
+        </div>
     </div>
-    <div class="col-3"></div>
-    
-</div>
+</form>
